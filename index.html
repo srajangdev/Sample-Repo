@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Explainer</title>
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    color: #eaeaea;
+}
+
+/* Heading */
+h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #8fd3f4;
+    letter-spacing: 1px;
+}
+
+/* Textarea */
+textarea {
+    width: 90%;
+    max-width: 800px;
+    height: 220px;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 15px;
+    color: #e5e7eb;
+    font-size: 15px;
+    resize: vertical;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+textarea::placeholder {
+    color: #9ca3af;
+}
+
+textarea:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.4);
+}
+
+/* Button */
+button {
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #6366f1, #3b82f6);
+    border: none;
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    opacity: 0.95;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+
+/* Output area */
+pre {
+    margin-top: 30px;
+    width: 90%;
+    max-width: 800px;
+
+    min-height: 200px;      
+    max-height: 600px;    
+    overflow-y: auto;       
+
+    background: #020617;
+    border-left: 5px solid #38bdf8;
+    padding: 18px;
+    border-radius: 12px;
+    color: #d1d5db;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <h2>AI Code Explainer</h2>
+    <textarea name="" id="code" placeholder="Paste Your Code...."></textarea>
+    <br>
+    <button onclick="explainCode()">Explain Code</button>
+    <pre id="output"></pre>
+
+    <script>
+
+        async function explainCode(){
+            document.getElementById('output').innerText = "Explaining code... Please wait.";
+            const code = document.getElementById('code').value;
+            const res=await fetch("/explain",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({code}) //converting code to json format
+            })
+
+            //convert objject to Json
+
+            const data=await res.json();
+
+            //displayin gthe explanation from AI
+            document.getElementById('output').innerText=data.explanation;
+        }
+    </script>
+</body>
+</html>
