@@ -115,26 +115,6 @@ pre {
     <button onclick="explainCode()">Explain Code</button>
     <pre id="output"></pre>
 
-    <script>
-
-        async function explainCode(){
-            document.getElementById('output').innerText = "Explaining code... Please wait.";
-            const code = document.getElementById('code').value;
-            const res=await fetch("/explain",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json",
-                },
-                body:JSON.stringify({code}) //converting code to json format
-            })
-
-            //convert objject to Json
-
-            const data=await res.json();
-
-            //displayin gthe explanation from AI
-            document.getElementById('output').innerText=data.explanation;
-        }
-    </script>
+    <script src="sample.js"></script>
 </body>
 </html>
